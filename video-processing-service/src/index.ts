@@ -1,29 +1,44 @@
 import express from "express";
-import ffmpeg from "fluent-ffmpeg"
+import {convertVideo, deleteProcessedVideo, deleteRawVideo, downloadRawVideo, setupDirectories, uploadProcessedVideo} from "./storage"
+
+setupDirectories();
 
 const app = express();
 app.use(express.json());
 
-app.post("/process-video", (req, res) => {
-  // get path of the input video file from request body
-  const inputFilePath = req.body.inputFilePath;
-  const outputFilePath = req.body.outputFilePath;
-  
-  if (!inputFilePath || !outputFilePath) {
-    res.status(400).send("missing input or output file path");
+app.post("/process-video", async (req, res) => {
+  // get bucket and filename from pubsub message
+  let data 
+  try{
+    const message = Buffer.from(req.body.message.data, "base64").toString();
+    data = JSON.parse(message);
+    if(!data.bucket || !data.name){
+      throw new Error("Invalid payload recieved!");
+    }
+  }catch(err){
+    console.error(err);
+    return res.status(400).send("Bad Request");
   }
-  
-  //convert video to 360p
-  ffmpeg(inputFilePath).outputOptions("-vf", "scale=-1:360").on("end", () => {
-    res.status(200).send("Video processing finished successfully");
+  const inputFileName = data.name;
+  const outputFileName = `processed-${inputFileName}`;
 
-  }).on("error", (err) => {
-    console.log(`error while processing video: ${err.message}`);
-    
-    res.status(500).send(`error while processing video, ${err.message}`);
+  // download raw video from bucket
+  await downloadRawVideo(inputFileName);
 
-  }).save(outputFilePath);
-  
+  // convert video to 360p
+  try{
+    await convertVideo(inputFileName, outputFileName)
+  }catch(err){
+    await Promise.all([deleteRawVideo(inputFileName), deleteProcessedVideo(outputFileName)]);
+    console.error(err);
+    return res.status(500).send("Internal Server Error");
+  }
+
+  // upload processed video to bucket
+  await uploadProcessedVideo(outputFileName);
+  await Promise.all([deleteRawVideo(inputFileName), deleteProcessedVideo(outputFileName)]);
+  return res.status(200).send('Processing complete!');
+
 });
 const port = process.env.PORT || 3000;
 
