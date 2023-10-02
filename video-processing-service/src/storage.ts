@@ -7,8 +7,8 @@ import ffmpeg from "fluent-ffmpeg";
 
 const storage = new Storage();
 
-const rawVideoBucketName = "ibrahim-yt-clone-raw-videos"; // upload to this bucket
-const processedVideoBucketName = "ibrahim-yt-clone-processed-videos"; // upload processed video to this bucket
+const rawVideoBucketName = "ih-yt-clone-raw-videos"; // upload to this bucket
+const processedVideoBucketName = "ih-yt-clone-processed-videos"; // upload processed video to this bucket
 
 const localRawVideoPath = "./raw-videos"; // download raw videos from rawVideoBucketName to this directory
 const localProcessedVideoPath = "./processed-videos" // upload processed videos from this directory to processedVideoBucketName then clean up
