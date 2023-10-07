@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+
 import {
   getAuth,
   signInWithPopup,
@@ -14,32 +14,29 @@ import {
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  apiKey: "AIzaSyAAP9L0wxr8BppWYbTXIbVzbDgfmjNwrZY",
+  authDomain: "yt-clone-7fa36.firebaseapp.com",
+  projectId: "yt-clone-7fa36",
+  storageBucket: "yt-clone-7fa36.appspot.com",
+  messagingSenderId: "1074125671801",
+  appId: "1:1074125671801:web:8c582d74392502b425b3a8",
+  measurementId: "G-ZCG2WL9B7E",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-const auth = getAuth();
+const auth = getAuth(app);
 
 /**
- * Signs the user in with Google popup
- * @returns A promise that resolves with the user's credentials
+ * Signs the user in with a google popup
+ * @returns The user object credentials
  */
-export const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
-};
+export function signInWithGoogle() {
+  return signInWithPopup(auth, new GoogleAuthProvider());
+}
 
 /**
- * Signs the user out
+ * Signs the User out
  * @returns A promise that resolves when the user is signed out
  */
 export function signOut() {
@@ -47,8 +44,8 @@ export function signOut() {
 }
 
 /**
- * Triggers a callback when the user's sign-in state changes
- * @returns A function that removes the callback
+ * Triggers a callback when user auth state changes.
+ * @returns A function to unsubscribe from the callback
  */
 export function onAuthStateChangedHelper(
   callback: (user: User | null) => void,
