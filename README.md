@@ -1,4 +1,5 @@
 This is a youtube clone which focuses mostly on backend fuctionality.
+[Screenshot 2023-09-07 at 19 19 09](https://github.com/Ibrahim-Hashem/youtube-backend-clone/assets/62023426/3613f00b-6f25-49b8-98d3-5be55315bd16)
 Limitations
 1. Long Lived HTTP Requests
 When processing videos, we face a challenge with long HTTP requests. While Pub/Sub allows a maximum acknowledgment deadline of 600 seconds, Cloud Run has a processing time limit of 3600 seconds. If video processing takes longer, Pub/Sub closes the connection, making it impossible to send an acknowledgment. This leaves messages stuck in the Pub/Sub queue.
@@ -23,7 +24,7 @@ Serving videos from a Content Delivery Network (CDN) located close to users can 
 The app currently lacks a mechanism to check the legality of videos before serving them, posing potential legal risks. Deploying the app publicly may not be safe without addressing this issue.
 
 Future Work
-Here are some potential improvements for the app:![Screenshot 2023-09-07 at 19 19 09](https://github.com/Ibrahim-Hashem/youtube-backend-clone/assets/62023426/acf04585-0db2-4015-a1ce-6ff800cb6084)
+Here are some potential improvements for the app:
 
 
 Add user profile pictures and emails to the Web Client.
@@ -36,5 +37,5 @@ Implement cleanup of raw videos in Cloud Storage after processing.
 Utilize a CDN for video serving.
 Incorporate unit and integration testing.
 Conclusion
-Thank you for reading this far! Designing and architecting applications involve various trade-offs and considerations. Building apps like Twitter or YouTube takes time a![Screenshot 2023-09-07 at 19 19 09](https://github.com/Ibrahim-Hashem/youtube-backend-clone/assets/62023426/3613f00b-6f25-49b8-98d3-5be55315bd16)
+Thank you for reading this far! Designing and architecting applications involve various trade-offs and considerations. Building apps like Twitter or YouTube takes time a!
 nd careful planning.
