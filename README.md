@@ -2,6 +2,8 @@ This is a youtube clone which focuses mostly on backend fuctionality.
 
 [architecture](https://github.com/Ibrahim-Hashem/youtube-backend-clone/assets/62023426/3613f00b-6f25-49b8-98d3-5be55315bd16)
 
+[link to deployed site](https://yt-web-client-tg5uchrmtq-nw.a.run.app)
+
 Limitations
 1. Long Lived HTTP Requests
 When processing videos, we face a challenge with long HTTP requests. While Pub/Sub allows a maximum acknowledgment deadline of 600 seconds, Cloud Run has a processing time limit of 3600 seconds. If video processing takes longer, Pub/Sub closes the connection, making it impossible to send an acknowledgment. This leaves messages stuck in the Pub/Sub queue.
