@@ -41,5 +41,5 @@ Implement cleanup of raw videos in Cloud Storage after processing.
 Utilize a CDN for video serving.
 Incorporate unit and integration testing.
 Conclusion
-Thank you for reading this far! Designing and architecting applications involve various trade-offs and considerations. Building apps like Twitter or YouTube takes time a!
-nd careful planning.
+Thank you for reading this far! Designing and architecting applications involve various trade-offs and considerations. Building apps like Twitter or YouTube takes time!
+and careful planning.
